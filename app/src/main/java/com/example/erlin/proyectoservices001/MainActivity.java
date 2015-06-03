@@ -115,6 +115,11 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new ProfileFragment();
 
                 break;
+            case 3:
+
+                fragment = new Aviso();
+
+                break;
 
             default:
 

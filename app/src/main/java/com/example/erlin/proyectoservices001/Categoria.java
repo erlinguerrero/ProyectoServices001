@@ -1,9 +1,9 @@
 package com.example.erlin.proyectoservices001;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,38 +13,32 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
-public class Servicio extends ActionBarActivity {
+public class Categoria extends ActionBarActivity {
     ListViewAdapter adapter;
 
     ListView list;
-    String[] servicios = new String[]{
-            "Carpintero",
-            "Tecnico Computo",
-            "Belleza",
-            "Electricista",
-            "Pintor",
-            "Soldadura",
-            "Mecanica"
+    String[] cate = new String[]{
+            "Servicios",
+            "Terrenos",
+            "Cuartos"
+
     };
     int[] img = {
-            R.mipmap.ic_action_home,
-            R.mipmap.ic_action_home,
-            R.mipmap.ic_action_home,
-            R.mipmap.ic_action_home,
-            R.mipmap.ic_action_home,
-            R.mipmap.ic_action_home,
-            R.mipmap.ic_action_home
+            R.mipmap.ic_servicio,
+            R.mipmap.ic_terreno,
+            R.mipmap.ic_cuartos
+
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.servicio);
+        setContentView(R.layout.categoria);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        list = (ListView) findViewById(R.id.milista);
-        ArrayAdapter adapters = new ArrayAdapter(this, android.R.layout.simple_list_item_1, servicios);
+        list = (ListView) findViewById(R.id.listcat);
+        ArrayAdapter adapters = new ArrayAdapter(this, android.R.layout.simple_list_item_1, cate);
         list.setAdapter(adapters);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -52,8 +46,9 @@ public class Servicio extends ActionBarActivity {
 
                 switch (posicion) {
                     case 0 :
-                        Toast toast1 = Toast.makeText(getApplicationContext(), "Cliente", Toast.LENGTH_SHORT);
-                        toast1.show();
+                        Intent a = new Intent(getApplicationContext(), Servicio.class);
+                        startActivity(a);
+
                         break;
                     case 1 :
 
@@ -63,33 +58,15 @@ public class Servicio extends ActionBarActivity {
 
 
                         break;
-                    case 3 :
 
-
-                        break;
-                    case 4 :
-
-
-                        break;
-                    case 5 :
-
-
-                        break;
-                    case 6 :
-
-
-                        break;
                     default:
                         Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        final ListView list = (ListView) findViewById(R.id.milista);
-        adapter = new ListViewAdapter(this, servicios, img);
+        final ListView list = (ListView) findViewById(R.id.listcat);
+        adapter = new ListViewAdapter(this, cate, img);
         list.setAdapter(adapter);
-
-
-
 
     }
 
@@ -97,7 +74,7 @@ public class Servicio extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_utilidad, menu);
+        getMenuInflater().inflate(R.menu.menu_categoria, menu);
         return true;
     }
 

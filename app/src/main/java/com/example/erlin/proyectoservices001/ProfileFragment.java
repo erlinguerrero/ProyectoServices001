@@ -6,14 +6,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 
 
-public class ProfileFragment extends Fragment{
+public class ProfileFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v =  inflater.inflate(R.layout.categoria, container, false);
+        View v =  inflater.inflate(R.layout.tocacategoria, container, false);
 
        initUi(v);
 
@@ -21,11 +21,11 @@ public class ProfileFragment extends Fragment{
     }
 
     private void initUi(View v) {
-        Button b1 = (Button)v.findViewById(R.id.Btn1);
+        ImageView b1 = (ImageView)v.findViewById(R.id.Btn1);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent se = new Intent(getActivity(), Servicio.class);
+                Intent se = new Intent(getActivity(), Categoria.class);
                     startActivity(se);
             }
         });

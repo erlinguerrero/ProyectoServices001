@@ -6,63 +6,12 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.erlin.lateral01.Servicio">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_action_home"
-        android:drawablePadding="10dp"
-        android:text="Belleza"
-        android:id="@+id/Btn1"
-        android:gravity="fill_horizontal|center_vertical"
-        android:layout_below="@+id/Btn1"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/Btn1"
-        android:background="@drawable/abc_cab_background_top_mtrl_alpha" />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_action_home"
-        android:drawablePadding="10dp"
-        android:text="Servicio Tecnico"
-        android:id="@+id/Btn2"
-        android:gravity="fill_horizontal|center_vertical"
-        android:layout_below="@+id/Btn1"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/Btn1"
-        android:background="@drawable/abc_cab_background_top_mtrl_alpha" />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_action_home"
-        android:drawablePadding="10dp"
-        android:text="Pintado"
-        android:id="@+id/Btn3"
-        android:gravity="fill_horizontal|center_vertical"
-        android:background="@drawable/abc_cab_background_top_mtrl_alpha"
-        android:layout_below="@+id/Btn2"
-        android:layout_alignParentStart="true" />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_action_home"
-        android:drawablePadding="10dp"
-        android:text="Lavanderia"
-        android:id="@+id/Btn4"
-        android:gravity="fill_horizontal|center_vertical"
-        android:background="@drawable/abc_cab_background_top_mtrl_alpha"
-        android:layout_below="@+id/Btn3"
-        android:layout_alignParentStart="true" />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_action_home"
-        android:drawablePadding="10dp"
-        android:text="Electricista"
-        android:id="@+id/Btn5"
-        android:gravity="fill_horizontal|center_vertical"
-        android:background="@drawable/abc_cab_background_top_mtrl_alpha"
-        android:layout_below="@+id/Btn4"
-        android:layout_alignParentStart="true" />
 
-
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/milista"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
