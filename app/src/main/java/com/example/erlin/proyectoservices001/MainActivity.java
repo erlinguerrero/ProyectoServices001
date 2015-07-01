@@ -51,8 +51,7 @@ public class MainActivity extends ActionBarActivity {
         NavItms.add(new Item_objct(titulos[0],NavIcons.getResourceId(0, -1)));
         NavItms.add(new Item_objct(titulos[1],NavIcons.getResourceId(1, -1)));
         NavItms.add(new Item_objct(titulos[2],NavIcons.getResourceId(2, -1)));
-        NavItms.add(new Item_objct(titulos[3],NavIcons.getResourceId(3, -1)));
-        NavItms.add(new Item_objct(titulos[4],NavIcons.getResourceId(4, -1)));
+
 
         NavAdapter = new NavigationAdapter(this,NavItms);
         NavList.setAdapter(NavAdapter);
@@ -192,5 +191,3 @@ public class MainActivity extends ActionBarActivity {
     }
 
 }
-
-

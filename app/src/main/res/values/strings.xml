@@ -11,8 +11,7 @@
         <item>Inicio</item>
         <item>Categoria</item>
         <item>Mis Avisos</item>
-        <item>Favoritos</item>
-        <item>Configuración</item>
+
     </string-array>
 
     <array name="navigation_iconos">
@@ -37,5 +36,15 @@
     <string name="publicar">Publicar un aviso</string>
     <string name="title_activity_prueba">prueba</string>
     <string name="title_activity_my">MyActivity</string>
+    <string name="Electricista">Electricista</string>
+    <string name="Mecanica">Mecanica</string>
+    <string name="Pintor">Pintor</string>
+    <string name="Soldadura">Soldadura</string>
+    <string name="title_activity_carpinteria">Carpinteria</string>
+    <string name="title_activity_tecnico">Tecnico</string>
+    <string name="title_activity_belleza">Belleza</string>
+    <string name="title_activity_electricista">Electricista</string>
+
+
 
 </resources>

@@ -1,118 +1,181 @@
 package com.example.erlin.proyectoservices001;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class Servicio extends ActionBarActivity {
-    ListViewAdapter adapter;
+    // Progress Dialog
+    private ProgressDialog pDialog;
 
-    ListView list;
-    String[] servicios = new String[]{
-            "Carpintero",
-            "Tecnico Computo",
-            "Belleza",
-            "Electricista",
-            "Pintor",
-            "Soldadura",
-            "Mecanica"
-    };
-    int[] img = {
-            R.mipmap.ic_action_home,
-            R.mipmap.ic_action_home,
-            R.mipmap.ic_action_home,
-            R.mipmap.ic_action_home,
-            R.mipmap.ic_action_home,
-            R.mipmap.ic_action_home,
-            R.mipmap.ic_action_home
-    };
+    // Creating JSON Parser object
+    JSONParser jParser = new JSONParser();
+
+    ArrayList<HashMap<String, String>> empresaList;
+
+
+    // url to get all products list
+    private static String url_all_empresas = "http://basedeempresa.esy.es/rojasconnect/get_all_empresas.php";
+
+    // JSON Node names
+    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_PRODUCTS = "empresas";
+    private static final String TAG_ID = "id";
+    private static final String TAG_NOMBRE = "nombre";
+    private static final String TAG_SERVICIO = "servicio";
+    private static final String TAG_DIRECCION = "direccion";
+    private static final String TAG_TELEFONO = "telefono";
+    private static final String TAG_PRECIO = "precio";
+
+    // products JSONArray
+    JSONArray products = null;
+
+    ListView lista;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.servicio);
 
+        // Hashmap para el ListView
+        empresaList = new ArrayList<HashMap<String, String>>();
+
+        // Cargar los productos en el Background Thread
+        new LoadAllProducts().execute();
+        lista = (ListView) findViewById(R.id.listAllProducts);
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        list = (ListView) findViewById(R.id.milista);
-        ArrayAdapter adapters = new ArrayAdapter(this, android.R.layout.simple_list_item_1, servicios);
-        list.setAdapter(adapters);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView adapterView, View view, int posicion, long l) {
 
-                switch (posicion) {
-                    case 0 :
-                        Toast toast1 = Toast.makeText(getApplicationContext(), "Cliente", Toast.LENGTH_SHORT);
-                        toast1.show();
-                        break;
-                    case 1 :
+    }//fin onCreate
 
 
-                        break;
-                    case 2:
+    class LoadAllProducts extends AsyncTask<String, String, String> {
 
-
-                        break;
-                    case 3 :
-
-
-                        break;
-                    case 4 :
-
-
-                        break;
-                    case 5 :
-
-
-                        break;
-                    case 6 :
-
-
-                        break;
-                    default:
-                        Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        final ListView list = (ListView) findViewById(R.id.milista);
-        adapter = new ListViewAdapter(this, servicios, img);
-        list.setAdapter(adapter);
-
-
-
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_utilidad, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        /**
+         * Antes de empezar el background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(Servicio.this);
+            pDialog.setMessage("Cargando Servicios. Por favor espere...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
         }
 
-        return super.onOptionsItemSelected(item);
+        /**
+         * obteniendo todos los productos
+         * */
+        protected String doInBackground(String... args) {
+            // Building Parameters
+            List params = new ArrayList();
+            // getting JSON string from URL
+            JSONObject json = jParser.makeHttpRequest(url_all_empresas, "GET", params);
+
+            // Check your log cat for JSON reponse
+            Log.d("All Products: ", json.toString());
+
+            try {
+                // Checking for SUCCESS TAG
+                int success = json.getInt(TAG_SUCCESS);
+
+                if (success == 1) {
+                    // products found
+                    // Getting Array of Products
+                    products = json.getJSONArray(TAG_PRODUCTS);
+
+                    // looping through All Products
+                    //Log.i("ramiro", "produtos.length" + products.length());
+                    for (int i = 0; i < products.length(); i++) {
+                        JSONObject c = products.getJSONObject(i);
+
+                        // Storing each json item in variable
+                        String id = c.getString(TAG_ID);
+                        String name = c.getString(TAG_NOMBRE);
+                        String servicio = c.getString(TAG_SERVICIO);
+                        String direccion = c.getString(TAG_DIRECCION);
+                        String telefono = c.getString(TAG_TELEFONO);
+                        String precio = c.getString(TAG_PRECIO);
+                        // creating new HashMap
+                        HashMap map = new HashMap();
+
+                        // adding each child node to HashMap key => value
+                        map.put(TAG_ID, id);
+                        map.put(TAG_NOMBRE, name);
+                        map.put(TAG_SERVICIO, servicio);
+                        map.put(TAG_DIRECCION, direccion);
+                        map.put(TAG_TELEFONO, telefono);
+                        map.put(TAG_PRECIO, precio);
+                        empresaList.add(map);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        /**
+         * After completing background task Dismiss the progress dialog
+         * **/
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog after getting all products
+            pDialog.dismiss();
+            // updating UI from Background Thread
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    /**
+                     * Updating parsed JSON data into ListView
+                     * */
+                    ListAdapter adapter = new SimpleAdapter(
+                            Servicio.this,
+                            empresaList,
+                            R.layout.single_post,
+                            new String[] {
+                                    TAG_ID,
+                                    TAG_NOMBRE,
+                                    TAG_SERVICIO,
+                                    TAG_DIRECCION,
+                                    TAG_TELEFONO,
+                                    TAG_PRECIO,
+                            },
+                            new int[] {
+                                    R.id.single_post_tv_id,
+                                    R.id.single_post_tv_nombre,
+                                    R.id.single_post_tv_servicio,
+                                    R.id.single_post_tv_direccion,
+                                    R.id.single_post_tv_telefono,
+                                    R.id.single_post_tv_precio,
+                            });
+                    // updating listview
+                    //setListAdapter(adapter);
+                    lista.setAdapter(adapter);
+                }
+            });
+        }
     }
 }

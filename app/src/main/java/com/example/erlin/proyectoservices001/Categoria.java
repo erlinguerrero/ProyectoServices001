@@ -18,15 +18,12 @@ public class Categoria extends ActionBarActivity {
 
     ListView list;
     String[] cate = new String[]{
-            "Servicios",
-            "Terrenos",
-            "Cuartos"
+            "Servicios"
 
     };
     int[] img = {
             R.mipmap.ic_servicio,
-            R.mipmap.ic_terreno,
-            R.mipmap.ic_cuartos
+
 
     };
 
@@ -50,14 +47,7 @@ public class Categoria extends ActionBarActivity {
                         startActivity(a);
 
                         break;
-                    case 1 :
 
-
-                        break;
-                    case 2:
-
-
-                        break;
 
                     default:
                         Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();

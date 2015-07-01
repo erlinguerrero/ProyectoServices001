@@ -65,7 +65,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
+        <activity
+            android:name=".Tecnico"
+            android:label="@string/title_activity_tecnico"
+            android:parentActivityName=".Servicio" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".Electricista"
+            android:label="@string/title_activity_electricista"
+            android:parentActivityName=".Servicio" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
 
 </manifest>
